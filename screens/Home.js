@@ -113,7 +113,7 @@ const Wrapper = () => {
       const dateArr = dateStr.split('-')
       for (const key of keys) {
         const num = parseFloat(date[key]['Total %'].split('%')[0])
-        const arr = [Date.UTC(dateArr[0], dateArr[1], dateArr[2]), num]
+        const arr = [Date.UTC(parseInt(dateArr[0]), parseInt(dateArr[1]) - 1, parseInt(dateArr[2]) + 1), num]
         const name = key
         seriesMap[name] = seriesMap[name] || []
         seriesMap[name].push(arr)
@@ -123,15 +123,14 @@ const Wrapper = () => {
     const seriesList = []
     for (const key of keys) {
       const name = key
-      const selected = name === 'Non-vacciné'
       const series = {
         name,
-        selected,
         data: seriesMap[name]
       }
 
       seriesList.push(series)
     }
+
     const lineChartOptions = {
       credits: {
         enabled: false,
@@ -139,7 +138,7 @@ const Wrapper = () => {
       chart: {
         type: 'spline',
         zoomType: 'x',
-        defaultSeriesType: 'line'
+        defaultSeriesType: 'line',
       },
       title: {
         text: 'Tendance des pourcentages d\'hospitalisations par statut vaccinal',
@@ -214,10 +213,10 @@ const Wrapper = () => {
         enabled: false,
       },
       chart: {
-        type: "column",
+        type: 'column',
       },
       title: {
-        text: "Hospitalisations covid-19 par âge et par statut vaccinal",
+        text: 'Hospitalisations covid-19 par âge et par statut vaccinal',
       },
       subtitle: {
         text: selectedDate,
@@ -229,7 +228,7 @@ const Wrapper = () => {
       yAxis: {
         min: 0,
         title: {
-          text: "Nombre d'hospitalisations",
+          text: 'Nombre d\'hospitalisations',
         },
       },
       tooltip: {
@@ -264,7 +263,7 @@ const Wrapper = () => {
   };
 
   useEffect(() => {
-    getDownloadURL(ref(firebase, "covid-data.json")).then((url) => {
+    getDownloadURL(ref(firebase, 'covid-data.json')).then((url) => {
       fetch(url)
         .then((res) => res.json())
         .then((json) => {
@@ -298,8 +297,8 @@ const Wrapper = () => {
       setStartDate(start);
       setEndDate(end);
       if (start && end) {
-        const startDateStr = format(start, "yyyy-MM-dd");
-        const endDateStr = format(end, "yyyy-MM-dd");
+        const startDateStr = format(start, 'yyyy-MM-dd');
+        const endDateStr = format(end, 'yyyy-MM-dd');
 
         const newSelectedDate = `Période du ${startDateStr} au ${endDateStr}`;
         const newMap = {
@@ -324,13 +323,13 @@ const Wrapper = () => {
 
         if (Object.keys(newMap).length <= 1) {
           alert(
-            "Cette plage de données ne donne aucun résultat. Veuillez essayer autre chose."
+            'Cette plage de données ne donne aucun résultat. Veuillez essayer autre chose.'
           );
         } else {
           for (const key of keys) {
             for (const subkey of subkeys) {
               const num = newMap[key][subkey];
-              const percent = `${((num / newMap["Total"].Total) * 100).toFixed(
+              const percent = `${((num / newMap['Total'].Total) * 100).toFixed(
                 2
               )}%`;
               newMap[key][`${subkey} %`] = percent;
@@ -343,12 +342,12 @@ const Wrapper = () => {
       }
     } else {
       const date = dates;
-      const selectedDateStr = format(date, "yyyy-MM-dd");
+      const selectedDateStr = format(date, 'yyyy-MM-dd');
       const selectedDateObj = data.map[selectedDateStr];
       if (!selectedDateObj) {
         setExcludedDates((prev) => [...prev, date]);
         alert(
-          "Cette date n'est malheureusement pas disponible dans les données."
+          'Cette date n\'est malheureusement pas disponible dans les données.'
         );
       } else {
         setSelectedDate(selectedDateStr);
@@ -362,7 +361,7 @@ const Wrapper = () => {
 
   const onCheckboxChange = () => {
     if (checked) {
-      const newSelectedDate = format(selectedDateTimestamp, "yyyy-MM-dd");
+      const newSelectedDate = format(selectedDateTimestamp, 'yyyy-MM-dd');
       setSelectedDate(newSelectedDate);
       const selectedDateObj = data.map[newSelectedDate];
       setSelectedDateTimestamp(startDate);
