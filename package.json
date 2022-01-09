@@ -1,0 +1,37 @@
+{
+  "name": "covid-data-visualisation",
+  "version": "1.0.0",
+  "description": "Data visualisations about Quebec covid hospitalisations",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "webpack-dev-server --https",
+    "build": "webpack --config webpack.config.js --colors",
+    "watch": "webpack --config webpack.config.js --colors --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Timur Ridjanovic",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^2.28.0",
+    "firebase": "^9.6.2",
+    "highcharts": "^9.3.2",
+    "highcharts-react-official": "^3.1.0",
+    "radium": "^0.26.0",
+    "react": "^16.13.1",
+    "react-datepicker": "^4.6.0",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.1.1",
+    "react-hot-loader": "^4.12.21",
+    "style-loader": "^1.2.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
